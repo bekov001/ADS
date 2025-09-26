@@ -1,33 +1,21 @@
-class Node:
-    def __init__(self, val, prev=None, next=None):
-        self.val = val
-        self.prev = prev
-        self.next = next
-
-t = int(input())
-
-
-
-for _ in range(t):
-    n = int(input())
-    data = list(input().split())
-    res = []
-    used = set()
-    head = Node(data[0])
-    for el in data[1:]:
-        if el not in used:
-            per = Node(el, head)
-            head.next = per
-            head = per
-            res.append(head.val)
-        elif el in used:
-            last = head
-            while last.prev is not None:
-                prev = last.prev
-                if prev.val not in used:
-                    res.append(prev.val)
-                    break
-            else:
-                res.append(-1)
-        used.add(el)
-    print(*res)
+import sys
+data = sys.stdin.read().strip().split()
+it = iter(data)
+T = int(next(it))
+out_lines = []
+for _ in range(T):
+    N = int(next(it))
+    from collections import deque
+    cnt = [0]*26
+    q = deque()
+    out = []
+    for _ in range(N):
+        c = next(it)[0]
+        idx = ord(c)-97
+        cnt[idx] += 1
+        q.append(c)
+        while q and cnt[ord(q[0])-97] > 1:
+            q.popleft()
+        out.append(q[0] if q else "-1")
+    out_lines.append(" ".join(out) + " ")
+sys.stdout.write("\n".join(out_lines))
