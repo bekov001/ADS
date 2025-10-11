@@ -1,15 +1,29 @@
 import heapq
 
-n = int(input())
-array = list(map(int, input().split()))
 
-heapq.heapify(array)
+q, k = map(int, input().split())
+
+h = []
+heapq.heapify(h)
+
 
 total = 0
-for _ in range(n - 1):
-    a = heapq.heappop(array)
-    b = heapq.heappop(array)
-    total += a + b
-    heapq.heappush(array, a + b)
+for _ in range(q):
+    command = input()
+    if command == "print":
+        print(total)
 
-print(total)
+    else:
+        c, n = command.split()
+        n = int(n)
+
+        if len(h) <k:
+            heapq.heappush(h, n)
+            total += n
+        else:
+            value = h[0]
+            if n > value:
+                total += n - value
+                heapq.heapreplace(h, n)
+
+
