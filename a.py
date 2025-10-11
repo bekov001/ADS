@@ -1,19 +1,39 @@
-# from itertools import
-import itertools
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
 
-a, b, c = map(int, input().split())
 
-maxa = 0
-tr = [a, b, c]
-per = itertools.permutations(tr, 3)
-# print(list(per))
-for tr in per:
-    for j in range(3):
-        dp = tr[j]
-        data = tr[:j] + tr[j + 1:]
-        # print(data)
+n = int(input().strip())
+head = None
+tail = None
+for _ in range(n):
+    val = int(input().strip())
+    node = Node(val)
+    if head is None:
+        head = tail = node
+    else:
+        tail.next = node
+        tail = node
 
-        for i in range(2):
-            dp = max(dp * data[i], dp + data[i], dp)
-        maxa = max(maxa, dp)
-print(maxa)
+
+data = int(input().strip())
+position = int(input().strip())
+
+
+new_node = Node(data)
+if position == 0:
+    new_node.next = head
+    head = new_node
+else:
+    cur = head
+    for _ in range(position - 1):
+        cur = cur.next
+    new_node.next = cur.next
+    cur.next = new_node
+
+
+cur = head
+while cur:
+    print(cur.data, end=" ")
+    cur = cur.next
