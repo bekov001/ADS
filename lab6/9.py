@@ -1,16 +1,16 @@
-def mergesort(arr):
+def mergesort(arr, key=lambda x: x):
     if len(arr) <= 1:
         return arr
     mid = len(arr) // 2
     left = arr[:mid]
     right = arr[mid:]
-    return merge(mergesort(left), mergesort(right))
+    return merge(mergesort(left, key), mergesort(right, key), key)
 
 
-def merge(left, right):
+def merge(left, right, key):
     result = []
     while left and right:
-        if left[0] < right[0]:
+        if key(left[0]) < key(right[0]):
             result.append(left.pop(0))
         else:
             result.append(right.pop(0))
@@ -18,10 +18,7 @@ def merge(left, right):
     result.extend(right)
     return result
 
-n = int(input())
-s = input()
 
-vowels = mergesort([c for c in s if c in 'aeiou'])
-consonants = mergesort([c for c in s if c not in 'aeiou'])
+string = input()
 
-print(''.join(vowels + consonants))
+print(*mergesort(list(string)), sep="")
