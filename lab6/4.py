@@ -28,4 +28,4 @@ for i in range(n):
 for el in mergesort(data, key=lambda x: (x[-1], x[-2], x[-3])):
     print(el[0] + "-" + el[1] + "-" + el[2])
 
-# for i in
+# for index in
